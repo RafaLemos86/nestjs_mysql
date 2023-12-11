@@ -27,17 +27,7 @@ let UserService = class UserService {
         return result;
     }
     async getOne(id) {
-        if (id <= 0) {
-            throw new common_1.BadRequestException(`id ${id} invalid`);
-        }
-        const result = await this.prisma.user.findUnique({
-            where: {
-                id
-            }
-        });
-        if (!result) {
-            throw new common_1.NotFoundException(`The id ${id} not found`);
-        }
+        const result = await this.checkId(id);
         return result;
     }
     async put(id, data) {
@@ -66,11 +56,18 @@ let UserService = class UserService {
         return new common_1.BadRequestException(`User ${id} not found`);
     }
     async checkId(id) {
-        const result = await this.getOne(id);
-        if (!result) {
-            return false;
+        if (id <= 0) {
+            throw new common_1.BadRequestException(`id ${id} invalid`);
         }
-        return true;
+        const result = await this.prisma.user.findUnique({
+            where: {
+                id
+            }
+        });
+        if (!result) {
+            throw new common_1.NotFoundException(`The id ${id} not found`);
+        }
+        return result;
     }
 };
 exports.UserService = UserService;

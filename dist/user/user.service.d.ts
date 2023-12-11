@@ -45,5 +45,12 @@ export declare class UserService {
         createdAt: Date;
         updatedAt: Date;
     } | BadRequestException>;
-    checkId(id: number): Promise<boolean>;
+    checkId(id: number): Promise<{
+        id: number;
+        name: string;
+        email: string;
+        password: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
 }

@@ -18,27 +18,12 @@ export class UserService {
 
     async getAll() {
         const result = await this.prisma.user.findMany()
-
         return result
 
     }
 
     async getOne(id: number) {
-
-        if (id <= 0) {
-            throw new BadRequestException(`id ${id} invalid`)
-        }
-
-        const result = await this.prisma.user.findUnique({
-            where: {
-                id
-            }
-        })
-
-        if (!result) {
-            throw new NotFoundException(`The id ${id} not found`)
-        }
-
+        const result = await this.checkId(id)
         return result
     }
 
@@ -56,6 +41,8 @@ export class UserService {
 
             return user
         }
+
+        return result
     };
 
     async delete(id: number) {
@@ -72,18 +59,26 @@ export class UserService {
             return user
         }
 
-        return new BadRequestException(`User ${id} not found`)
+        return result
 
     }
 
     async checkId(id: number) {
-        const result = await this.getOne(id)
-
-        if (!result) {
-            return false
+        if (id <= 0) {
+            throw new BadRequestException(`id ${id} invalid`)
         }
 
-        return true
+        const result = await this.prisma.user.findUnique({
+            where: {
+                id
+            }
+        })
+
+        if (!result) {
+            throw new NotFoundException(`The id ${id} not found`)
+        }
+
+        return result
     }
 
 }
