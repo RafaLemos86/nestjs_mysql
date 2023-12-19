@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateUserDTO } from "./DTO/create.user.dto";
 import { UpdateUserDTO } from "./DTO/update.user.dto";
+import { CreateLoginUserDTO } from "./DTO/create-login.user.dto";
 
 @Injectable()
 export class UserService {
@@ -16,6 +17,20 @@ export class UserService {
         return result
     }
 
+    async createLogin({ email, password }: CreateLoginUserDTO) {
+        const name = ''
+
+        const result = await this.prisma.user.create({
+            data: {
+                email,
+                password,
+                name
+            }
+        });
+
+        return result
+    }
+
     async getAll() {
         const result = await this.prisma.user.findMany()
         return result
@@ -24,6 +39,15 @@ export class UserService {
 
     async getOne(id: number) {
         const result = await this.checkId(id)
+        return result
+    }
+
+    async show(id: number) {
+        const result = await this.prisma.user.findFirst({
+            where: {
+                id
+            }
+        })
         return result
     }
 
@@ -79,6 +103,8 @@ export class UserService {
         }
 
         return result
-    }
+    };
+
+
 
 }

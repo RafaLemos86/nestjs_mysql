@@ -22,12 +22,31 @@ let UserService = class UserService {
         });
         return result;
     }
+    async createLogin({ email, password }) {
+        const name = '';
+        const result = await this.prisma.user.create({
+            data: {
+                email,
+                password,
+                name
+            }
+        });
+        return result;
+    }
     async getAll() {
         const result = await this.prisma.user.findMany();
         return result;
     }
     async getOne(id) {
         const result = await this.checkId(id);
+        return result;
+    }
+    async show(id) {
+        const result = await this.prisma.user.findFirst({
+            where: {
+                id
+            }
+        });
         return result;
     }
     async put(id, data) {
@@ -41,6 +60,7 @@ let UserService = class UserService {
             });
             return user;
         }
+        return result;
     }
     ;
     async delete(id) {
@@ -53,7 +73,7 @@ let UserService = class UserService {
             });
             return user;
         }
-        return new common_1.BadRequestException(`User ${id} not found`);
+        return result;
     }
     async checkId(id) {
         if (id <= 0) {
@@ -69,6 +89,7 @@ let UserService = class UserService {
         }
         return result;
     }
+    ;
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([

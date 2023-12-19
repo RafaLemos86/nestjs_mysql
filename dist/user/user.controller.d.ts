@@ -1,4 +1,3 @@
-import { BadRequestException } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CreateUserDTO } from "./DTO/create.user.dto";
 import { UpdateUserDTO } from "./DTO/update.user.dto";
@@ -44,5 +43,5 @@ export declare class UserController {
         password: string;
         createdAt: Date;
         updatedAt: Date;
-    } | BadRequestException>;
+    }>;
 }

@@ -1,9 +1,9 @@
-import { IsEmail, IsJWT, IsNotEmpty } from "class-validator";
+import { IsJWT, IsNotEmpty, IsStrongPassword } from "class-validator";
 
 export class AuthResetDTO {
-    @IsEmail()
     @IsNotEmpty()
-    email: string
+    @IsStrongPassword()
+    password: string
 
     @IsJWT()
     token: string
