@@ -22,10 +22,11 @@ exports.AuthModule = AuthModule = __decorate([
                 secret: ":c3,D^h7V^r:Lvy^%By@YtRKm}:8Rx!vJXe?"
             }),
             prisma_module_1.PrismaModule,
-            user_module_1.UserModule
+            (0, common_1.forwardRef)(() => user_module_1.UserModule)
         ],
         controllers: [auth_controller_1.AuthController],
-        providers: [auth_service_1.AuthService]
+        providers: [auth_service_1.AuthService],
+        exports: [auth_service_1.AuthService]
     })
 ], AuthModule);
 //# sourceMappingURL=auth.module.js.map

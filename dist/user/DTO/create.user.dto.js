@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserDTO = void 0;
 const class_validator_1 = require("class-validator");
+const role_enum_1 = require("../../enums/role.enum");
 class CreateUserDTO {
 }
 exports.CreateUserDTO = CreateUserDTO;
@@ -29,4 +30,9 @@ __decorate([
     (0, class_validator_1.IsStrongPassword)(),
     __metadata("design:type", String)
 ], CreateUserDTO.prototype, "password", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsEnum)(role_enum_1.Role),
+    __metadata("design:type", String)
+], CreateUserDTO.prototype, "role", void 0);
 //# sourceMappingURL=create.user.dto.js.map
