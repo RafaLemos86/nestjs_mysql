@@ -15,11 +15,13 @@ const jwt_1 = require("@nestjs/jwt");
 const prisma_service_1 = require("../prisma/prisma.service");
 const user_service_1 = require("../user/user.service");
 const bcrypt = require("bcrypt");
+const mailer_1 = require("@nestjs-modules/mailer");
 let AuthService = class AuthService {
-    constructor(jwtService, Prisma, UserService) {
+    constructor(jwtService, Prisma, UserService, MailerService) {
         this.jwtService = jwtService;
         this.Prisma = Prisma;
         this.UserService = UserService;
+        this.MailerService = MailerService;
     }
     createToken(user) {
         return {
@@ -39,7 +41,6 @@ let AuthService = class AuthService {
     checkToken(token) {
         try {
             return this.jwtService.verify(token, {
-                issuer: "API Login nestJS",
                 audience: "users"
             });
         }
@@ -77,24 +78,35 @@ let AuthService = class AuthService {
         if (!user) {
             throw new common_1.UnauthorizedException(`Email não encontrado`);
         }
+        const token = this.jwtService.sign({
+            id: user.id,
+        }, {
+            expiresIn: "30 minutes",
+            subject: String(user.id),
+            issuer: "API forget nestJS",
+            audience: "users"
+        });
+        try {
+            await this.MailerService.sendMail({
+                subject: "Recuperação de Senha",
+                to: user.email,
+                text: `Prezado ${user.name}, seu token de recuperação de senha é este: ${token}`,
+            });
+        }
+        catch (e) {
+            throw new common_1.BadRequestException(e);
+        }
         return true;
     }
     ;
     async reset(password, token) {
         try {
-            const id = 1;
-            const user = await this.Prisma.user.update({
-                where: {
-                    id
-                },
-                data: {
-                    password
-                }
-            });
-            return this.createToken(user);
+            const { id } = this.checkToken(token);
+            await this.UserService.put(id, { password });
+            return true;
         }
-        catch (error) {
-            throw new common_1.NotFoundException(`User not found`);
+        catch (e) {
+            throw new common_1.BadRequestException(e);
         }
     }
     ;
@@ -113,6 +125,7 @@ exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [jwt_1.JwtService,
         prisma_service_1.PrismaService,
-        user_service_1.UserService])
+        user_service_1.UserService,
+        mailer_1.MailerService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

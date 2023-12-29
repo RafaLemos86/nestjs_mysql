@@ -15,9 +15,7 @@ export declare class AuthController {
         accessToken: string;
     }>;
     forget({ email }: AuthForgetDTO): Promise<boolean>;
-    reset({ password, token }: AuthResetDTO): Promise<{
-        accessToken: string;
-    }>;
+    reset({ password, token }: AuthResetDTO): Promise<boolean>;
     me(user: string): Promise<{
         user: string;
     }>;

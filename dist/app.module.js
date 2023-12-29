@@ -12,6 +12,7 @@ const app_service_1 = require("./app.service");
 const user_module_1 = require("./user/user.module");
 const auth_module_1 = require("./auth/auth.module");
 const config_1 = require("@nestjs/config");
+const mailer_1 = require("@nestjs-modules/mailer");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -20,7 +21,20 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             config_1.ConfigModule.forRoot(),
             (0, common_1.forwardRef)(() => user_module_1.UserModule),
-            (0, common_1.forwardRef)(() => auth_module_1.AuthModule)
+            (0, common_1.forwardRef)(() => auth_module_1.AuthModule),
+            mailer_1.MailerModule.forRoot({
+                transport: {
+                    host: 'smtp.ethereal.email',
+                    port: 587,
+                    auth: {
+                        user: 'otho.maggio@ethereal.email',
+                        pass: 'W3STZSbaTN9DF1VDB3'
+                    }
+                },
+                defaults: {
+                    from: '"Rafael Nests" <modules@nestjs.com>',
+                },
+            }),
         ],
         controllers: [],
         providers: [app_service_1.AppService],
