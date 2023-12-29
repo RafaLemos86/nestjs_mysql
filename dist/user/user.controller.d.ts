@@ -22,7 +22,8 @@ export declare class UserController {
         createdAt: Date;
         updatedAt: Date;
     }[]>;
-    readOne(id: number): Promise<{
+    readOne(id: number): Promise<boolean>;
+    update(id: number, data: UpdateUserDTO): Promise<boolean | {
         id: number;
         name: string;
         email: string;
@@ -31,16 +32,7 @@ export declare class UserController {
         createdAt: Date;
         updatedAt: Date;
     }>;
-    update(id: number, data: UpdateUserDTO): Promise<{
-        id: number;
-        name: string;
-        email: string;
-        password: string;
-        role: string;
-        createdAt: Date;
-        updatedAt: Date;
-    }>;
-    delete(id: number): Promise<{
+    delete(id: number): Promise<boolean | {
         id: number;
         name: string;
         email: string;

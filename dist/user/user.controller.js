@@ -51,7 +51,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "create", null);
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Admin),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -80,6 +79,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "delete", null);
 exports.UserController = UserController = __decorate([
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.Admin),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard, roles_guard_1.RolesGuard),
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [user_service_1.UserService])

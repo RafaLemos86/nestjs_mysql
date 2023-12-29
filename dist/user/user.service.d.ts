@@ -32,15 +32,7 @@ export declare class UserService {
         createdAt: Date;
         updatedAt: Date;
     }[]>;
-    getOne(id: number): Promise<{
-        id: number;
-        name: string;
-        email: string;
-        password: string;
-        role: string;
-        createdAt: Date;
-        updatedAt: Date;
-    }>;
+    getOne(id: number): Promise<boolean>;
     show(id: number): Promise<{
         id: number;
         name: string;
@@ -50,7 +42,7 @@ export declare class UserService {
         createdAt: Date;
         updatedAt: Date;
     }>;
-    put(id: number, data: UpdateUserDTO): Promise<{
+    put(id: number, data: UpdateUserDTO): Promise<boolean | {
         id: number;
         name: string;
         email: string;
@@ -59,7 +51,7 @@ export declare class UserService {
         createdAt: Date;
         updatedAt: Date;
     }>;
-    delete(id: number): Promise<{
+    delete(id: number): Promise<boolean | {
         id: number;
         name: string;
         email: string;
@@ -68,13 +60,5 @@ export declare class UserService {
         createdAt: Date;
         updatedAt: Date;
     }>;
-    checkId(id: number): Promise<{
-        id: number;
-        name: string;
-        email: string;
-        password: string;
-        role: string;
-        createdAt: Date;
-        updatedAt: Date;
-    }>;
+    checkId(id: number): Promise<boolean>;
 }

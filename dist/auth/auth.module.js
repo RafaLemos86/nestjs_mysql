@@ -19,7 +19,7 @@ exports.AuthModule = AuthModule;
 exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [jwt_1.JwtModule.register({
-                secret: ":c3,D^h7V^r:Lvy^%By@YtRKm}:8Rx!vJXe?"
+                secret: process.env.JWTSecret
             }),
             prisma_module_1.PrismaModule,
             (0, common_1.forwardRef)(() => user_module_1.UserModule)

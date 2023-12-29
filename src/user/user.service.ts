@@ -2,13 +2,17 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateUserDTO } from "./DTO/create.user.dto";
 import { UpdateUserDTO } from "./DTO/update.user.dto";
-import { CreateLoginUserDTO } from "./DTO/create-login.user.dto";
+import { CreateLoginUserDTO } from "./DTO/create-login.user.dto"
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class UserService {
     constructor(private readonly prisma: PrismaService) { }
 
     async create(data: CreateUserDTO) {
+
+        const salt = await bcrypt.genSalt()
+        data.password = await bcrypt.hash(data.password, salt)
 
         const result = await this.prisma.user.create({
             data
@@ -19,6 +23,9 @@ export class UserService {
 
     async createLogin({ email, password }: CreateLoginUserDTO) {
         const name = ''
+
+        const salt = await bcrypt.genSalt()
+        password = await bcrypt.hash(password, salt)
 
         const result = await this.prisma.user.create({
             data: {
@@ -54,6 +61,13 @@ export class UserService {
     async put(id: number, data: UpdateUserDTO) {
 
         const result = await this.checkId(id)
+
+        if (data.password) {
+            const salt = await bcrypt.genSalt()
+            data.password = await bcrypt.hash(data.password, salt)
+
+        }
+
 
         if (result) {
             const user = this.prisma.user.update({
@@ -102,7 +116,7 @@ export class UserService {
             throw new NotFoundException(`The id ${id} not found`)
         }
 
-        return result
+        return true
     };
 
 

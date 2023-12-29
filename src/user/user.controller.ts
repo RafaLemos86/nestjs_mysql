@@ -7,6 +7,7 @@ import { Role } from "src/enums/role.enum";
 import { RolesGuard } from "src/guards/roles.guard";
 import { AuthGuard } from "src/guards/auth.guard";
 
+@Roles(Role.Admin)
 @UseGuards(AuthGuard, RolesGuard)
 @Controller('users')
 export class UserController {
@@ -18,7 +19,6 @@ export class UserController {
         return this.userService.create(data)
     };
 
-    @Roles(Role.Admin)
     @Get()
     async readAll() {
         return this.userService.getAll()

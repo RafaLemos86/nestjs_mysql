@@ -12,11 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
+const bcrypt = require("bcrypt");
 let UserService = class UserService {
     constructor(prisma) {
         this.prisma = prisma;
     }
     async create(data) {
+        const salt = await bcrypt.genSalt();
+        data.password = await bcrypt.hash(data.password, salt);
         const result = await this.prisma.user.create({
             data
         });
@@ -24,6 +27,8 @@ let UserService = class UserService {
     }
     async createLogin({ email, password }) {
         const name = '';
+        const salt = await bcrypt.genSalt();
+        password = await bcrypt.hash(password, salt);
         const result = await this.prisma.user.create({
             data: {
                 email,
@@ -51,6 +56,10 @@ let UserService = class UserService {
     }
     async put(id, data) {
         const result = await this.checkId(id);
+        if (data.password) {
+            const salt = await bcrypt.genSalt();
+            data.password = await bcrypt.hash(data.password, salt);
+        }
         if (result) {
             const user = this.prisma.user.update({
                 where: {
@@ -87,7 +96,7 @@ let UserService = class UserService {
         if (!result) {
             throw new common_1.NotFoundException(`The id ${id} not found`);
         }
-        return result;
+        return true;
     }
     ;
 };
