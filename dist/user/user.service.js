@@ -11,8 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
-const prisma_service_1 = require("../prisma/prisma.service");
 const bcrypt = require("bcrypt");
+const prisma_service_1 = require("../prisma/prisma.service");
 let UserService = class UserService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -44,6 +44,14 @@ let UserService = class UserService {
     }
     async getOne(id) {
         const result = await this.checkId(id);
+        if (result) {
+            const user = await this.prisma.user.findUnique({
+                where: {
+                    id
+                }
+            });
+            return user;
+        }
         return result;
     }
     async show(id) {

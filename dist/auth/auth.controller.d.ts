@@ -2,7 +2,7 @@ import { AuthLoginDTO } from "./DTO/auth.login.dto";
 import { AuthRegisterDTO } from "./DTO/auth.register.dto";
 import { AuthForgetDTO } from "./DTO/auth.forget.dto";
 import { AuthResetDTO } from "./DTO/auth.reset.dto";
-import { UserService } from "src/user/user.service";
+import { UserService } from "../user/user.service";
 import { AuthService } from "./auth.service";
 export declare class AuthController {
     private readonly UserService;

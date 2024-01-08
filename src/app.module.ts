@@ -1,10 +1,8 @@
 import { Module, forwardRef } from '@nestjs/common';
-import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { MailerModule } from '@nestjs-modules/mailer';
-import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 
 @Module({
   imports: [
@@ -26,7 +24,6 @@ import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
       },
     }),
   ],
-  controllers: [],
-  providers: [AppService],
+  controllers: []
 })
 export class AppModule { }

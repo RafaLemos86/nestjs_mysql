@@ -3,10 +3,10 @@ import { AuthLoginDTO } from "./DTO/auth.login.dto";
 import { AuthRegisterDTO } from "./DTO/auth.register.dto";
 import { AuthForgetDTO } from "./DTO/auth.forget.dto";
 import { AuthResetDTO } from "./DTO/auth.reset.dto";
-import { UserService } from "src/user/user.service";
+import { UserService } from "../user/user.service";
 import { AuthService } from "./auth.service";
-import { AuthGuard } from "src/guards/auth.guard";
-import { User } from "src/decorators/user.decorator";
+import { AuthGuard } from "../guards/auth.guard";
+import { User } from "../decorators/user.decorator";
 
 @Controller('auth')
 export class AuthController {

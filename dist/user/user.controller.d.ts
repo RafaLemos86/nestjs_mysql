@@ -22,7 +22,15 @@ export declare class UserController {
         createdAt: Date;
         updatedAt: Date;
     }[]>;
-    readOne(id: number): Promise<boolean>;
+    readOne(id: number): Promise<boolean | {
+        id: number;
+        name: string;
+        email: string;
+        password: string;
+        role: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
     update(id: number, data: UpdateUserDTO): Promise<boolean | {
         id: number;
         name: string;

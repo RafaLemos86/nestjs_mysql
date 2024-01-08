@@ -2,10 +2,11 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuard
 import { UserService } from "./user.service";
 import { CreateUserDTO } from "./DTO/create.user.dto";
 import { UpdateUserDTO } from "./DTO/update.user.dto";
-import { Roles } from "src/decorators/roles.decorator";
-import { Role } from "src/enums/role.enum";
-import { RolesGuard } from "src/guards/roles.guard";
-import { AuthGuard } from "src/guards/auth.guard";
+import { Roles } from "../decorators/roles.decorator";
+import { AuthGuard } from "../guards/auth.guard";
+import { RolesGuard } from "../guards/roles.guard";
+import { Role } from "../enums/role.enum";
+
 
 @Roles(Role.Admin)
 @UseGuards(AuthGuard, RolesGuard)

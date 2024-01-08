@@ -1,9 +1,10 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { PrismaService } from "src/prisma/prisma.service";
 import { CreateUserDTO } from "./DTO/create.user.dto";
 import { UpdateUserDTO } from "./DTO/update.user.dto";
 import { CreateLoginUserDTO } from "./DTO/create-login.user.dto"
 import * as bcrypt from 'bcrypt'
+import { PrismaService } from "../prisma/prisma.service";
+import { name } from "ejs";
 
 @Injectable()
 export class UserService {
@@ -46,6 +47,16 @@ export class UserService {
 
     async getOne(id: number) {
         const result = await this.checkId(id)
+
+        if (result) {
+            const user = await this.prisma.user.findUnique({
+                where: {
+                    id
+                }
+            })
+            return user
+        }
+
         return result
     }
 

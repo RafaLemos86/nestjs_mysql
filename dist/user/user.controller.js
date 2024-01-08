@@ -18,9 +18,9 @@ const user_service_1 = require("./user.service");
 const create_user_dto_1 = require("./DTO/create.user.dto");
 const update_user_dto_1 = require("./DTO/update.user.dto");
 const roles_decorator_1 = require("../decorators/roles.decorator");
-const role_enum_1 = require("../enums/role.enum");
-const roles_guard_1 = require("../guards/roles.guard");
 const auth_guard_1 = require("../guards/auth.guard");
+const roles_guard_1 = require("../guards/roles.guard");
+const role_enum_1 = require("../enums/role.enum");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
