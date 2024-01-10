@@ -99,13 +99,13 @@ export class UserService {
 
         if (result) {
 
-            const user = await this.prisma.user.delete({
+            await this.prisma.user.delete({
                 where: {
                     id
                 }
             })
 
-            return user
+            return true
         }
 
         return result

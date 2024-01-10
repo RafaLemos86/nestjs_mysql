@@ -1,11 +1,11 @@
 import { Test } from "@nestjs/testing"
 import { UserService } from "./user.service"
 import { PrismaService } from "../prisma/prisma.service";
-import { Role } from "../enums/role.enum";
 import { CreateUserDTO } from "./DTO/create.user.dto";
 import { userEntityList } from "./testing/user-entity-list.mock";
 import { CreateUserDTOMock } from "./testing/create-user-dot.mock";
 import { userEmailNull } from "./testing/emailNull-user.mock";
+import { UpdateUserDTOMock } from "./testing/update-user-dot.mock";
 
 
 describe("userService", () => {
@@ -38,12 +38,7 @@ describe("userService", () => {
             const result: CreateUserDTO = await sut.create(CreateUserDTOMock);
 
             //Avaliando o retorno
-            expect(result).toMatchObject({
-                name: "Rafael Lemos",
-                password: "rafael32@A",
-                email: "rafael@gmail.com",
-                role: "user"
-            });
+            expect(result).toMatchObject(userEntityList[0]);
         })
 
         it("should not to create a new user if the email is missing and throw a error", async () => {
@@ -56,7 +51,6 @@ describe("userService", () => {
 
 
     })
-
 
 
     describe("Read", () => {
@@ -85,15 +79,8 @@ describe("userService", () => {
 
         it("should return error if the id not exists", async () => {
             expect(async () => {
-                await sut.getOne(-1)
+                await sut.getOne(2000)
             }).rejects.toThrow()
         })
-
-
-
-
     })
-    describe("Update", () => { })
-    describe("Delete", () => { })
-
 })
