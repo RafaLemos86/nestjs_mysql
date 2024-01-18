@@ -70,10 +70,6 @@ export class AuthService {
             throw new UnauthorizedException(`Email e/ou senha incorreto`)
         }
 
-        console.log(email)
-        console.log(user)
-
-
         return this.createToken(user)
     }
 

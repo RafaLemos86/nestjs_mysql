@@ -70,8 +70,6 @@ let AuthService = class AuthService {
         if (!isValidUser) {
             throw new common_1.UnauthorizedException(`Email e/ou senha incorreto`);
         }
-        console.log(email);
-        console.log(user);
         return this.createToken(user);
     }
     async forget(email) {
