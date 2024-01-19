@@ -83,12 +83,12 @@ let UserService = class UserService {
     async delete(id) {
         const result = await this.checkId(id);
         if (result) {
-            const user = await this.prisma.user.delete({
+            await this.prisma.user.delete({
                 where: {
                     id
                 }
             });
-            return user;
+            return true;
         }
         return result;
     }

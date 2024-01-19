@@ -13,9 +13,9 @@ exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const bcrypt = require("bcrypt");
-const mailer_1 = require("@nestjs-modules/mailer");
 const prisma_service_1 = require("../prisma/prisma.service");
 const user_service_1 = require("../user/user.service");
+const mailer_1 = require("@nestjs-modules/mailer");
 let AuthService = class AuthService {
     constructor(jwtService, Prisma, UserService, MailerService) {
         this.jwtService = jwtService;

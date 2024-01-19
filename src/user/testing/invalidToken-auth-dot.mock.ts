@@ -1,0 +1,1 @@
+export const invalidMockedAcessToken = "eyJpZCI6MTEsIm5hbWUiOiJ0ZXN0ZSIsImVtYWlsIjoibWFyY2lvQGdtYWlsLmNvbSIsImlhdCI6MTcwNTY2OTI1MywiZXhwIjoxNzA2MjlMiLCJzdWIiOiIxMSJ9.etljd"

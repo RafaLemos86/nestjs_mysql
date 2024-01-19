@@ -6,23 +6,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.EmailModule = void 0;
 const common_1 = require("@nestjs/common");
-const user_module_1 = require("./user/user.module");
-const auth_module_1 = require("./auth/auth.module");
+const mailer_1 = require("@nestjs-modules/mailer");
 const config_1 = require("@nestjs/config");
-const MailerModule_module_1 = require("./MailerModule.module");
-let AppModule = class AppModule {
+let EmailModule = class EmailModule {
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
+exports.EmailModule = EmailModule;
+exports.EmailModule = EmailModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            config_1.ConfigModule.forRoot(),
-            (0, common_1.forwardRef)(() => user_module_1.UserModule),
-            (0, common_1.forwardRef)(() => auth_module_1.AuthModule),
-            MailerModule_module_1.EmailModule
-        ],
+            config_1.ConfigModule,
+            mailer_1.MailerModule.forRoot({
+                transport: {
+                    host: 'smtp.ethereal.email',
+                    port: 587,
+                    auth: {
+                        user: 'mary.kuvalis60@ethereal.email',
+                        pass: '5AJ5B5rfNZY5aeY821'
+                    }
+                },
+                defaults: {
+                    from: '"Rafael Nests" <modules@nestjs.com>',
+                },
+            }),
+        ]
     })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+], EmailModule);
+//# sourceMappingURL=MailerModule.module.js.map

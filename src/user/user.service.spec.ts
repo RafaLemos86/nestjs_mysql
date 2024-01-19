@@ -6,6 +6,9 @@ import { userEntityList } from "./testing/user-entity-list.mock";
 import { CreateUserDTOMock } from "./testing/create-user-dot.mock";
 import { userEmailNull } from "./testing/emailNull-user.mock";
 import { UpdateUserDTOMock } from "./testing/update-user-dot.mock";
+import { UpdateUserDTO } from "./DTO/update.user.dto";
+import { DeleteUserMock } from "./testing/delete-user-dot.mock";
+import { NotFoundException } from "@nestjs/common";
 
 
 describe("userService", () => {
@@ -82,5 +85,91 @@ describe("userService", () => {
                 await sut.getOne(2000)
             }).rejects.toThrow()
         })
+    });
+
+    describe('put', () => {
+        it('should update a user if the ID is found', async () => {
+            // Mock dos dados e comportamento esperado
+            const id = 1;
+            const data: UpdateUserDTO = { role: "admin" };
+            const userMock = UpdateUserDTOMock;
+
+            prisma.user.findUnique = jest.fn().mockResolvedValue(userMock);
+            prisma.user.update = jest.fn().mockResolvedValue(userMock);
+
+            // Executar a função e verificar o resultado
+            const result = await sut.put(id, data);
+
+            expect(result).toEqual(userMock);
+            expect(prisma.user.findUnique).toHaveBeenCalledWith({
+                where: { id }
+            });
+            expect(prisma.user.update).toHaveBeenCalledWith({
+                where: { id },
+                data
+            });
+        })
+
+
+        it('should throw NotFoundException if the ID is not found', async () => {
+            // Mock dos dados e comportamento esperado
+            const id = 1;
+            const data: UpdateUserDTO = { name: "lemos" };
+
+            prisma.user.findUnique = jest.fn().mockResolvedValue(null);
+
+            // Executar a função e verificar o lançamento da exceção
+            await expect(sut.put(id, data)).rejects.toThrow()
+
+            expect(prisma.user.findUnique).toHaveBeenCalledWith({
+                where: { id }
+            });
+
+        });
+    });
+
+
+    describe("delete", () => {
+        it("should delete a user if the ID is found", async () => {
+            // Mock dos dados e comportamento esperado
+            const id = 2;
+
+            // Mock do método findUnique
+            jest.spyOn(sut, 'checkId').mockResolvedValue(true);
+
+            // retorno esperado do delete
+            prisma.user.delete = jest.fn().mockResolvedValue(DeleteUserMock)
+
+            // Executar a função e verificar o resultado
+            const result = await sut.delete(id);
+
+            // Verificar se a função checkId foi chamada corretamente
+            expect(sut.checkId).toHaveBeenCalledWith(id);
+
+            // Verificar se a função delete foi chamada corretamente
+            expect(prisma.user.delete).toHaveBeenCalledWith({
+                where: { id },
+            });
+
+            // Verificar se o resultado é verdadeiro (indicando que o usuário foi excluído)
+            expect(result).toEqual(true);
+        })
+
+        it('should return false and throw NotFoundException if the ID is not found', async () => {
+            // Mock dos dados e comportamento esperado
+            const id = 999; // Um ID que não existe no seu mock
+
+            // Mock do método checkId para retornar false
+            jest.spyOn(sut, 'checkId').mockResolvedValue(new NotFoundException);
+
+            // Executar a função e verificar o resultado
+            await expect(sut.delete(id)).rejects.toThrow();
+
+            // Verificar se a função checkId foi chamada corretamente
+            expect(sut.checkId).toHaveBeenCalledWith(id);
+
+        });
     })
+
+
 })

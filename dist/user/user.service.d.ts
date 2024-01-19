@@ -1,3 +1,4 @@
+import { BadRequestException, NotFoundException } from "@nestjs/common";
 import { CreateUserDTO } from "./DTO/create.user.dto";
 import { UpdateUserDTO } from "./DTO/update.user.dto";
 import { CreateLoginUserDTO } from "./DTO/create-login.user.dto";
@@ -40,7 +41,7 @@ export declare class UserService {
         role: string;
         createdAt: Date;
         updatedAt: Date;
-    }>;
+    } | BadRequestException | NotFoundException>;
     show(id: number): Promise<{
         id: number;
         name: string;
@@ -58,15 +59,7 @@ export declare class UserService {
         role: string;
         createdAt: Date;
         updatedAt: Date;
-    }>;
-    delete(id: number): Promise<boolean | {
-        id: number;
-        name: string;
-        email: string;
-        password: string;
-        role: string;
-        createdAt: Date;
-        updatedAt: Date;
-    }>;
-    checkId(id: number): Promise<boolean>;
+    } | BadRequestException | NotFoundException>;
+    delete(id: number): Promise<boolean | BadRequestException | NotFoundException>;
+    checkId(id: number): Promise<boolean | BadRequestException | NotFoundException>;
 }

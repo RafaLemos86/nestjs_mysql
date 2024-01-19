@@ -30,7 +30,7 @@ export declare class UserController {
         role: string;
         createdAt: Date;
         updatedAt: Date;
-    }>;
+    } | import("@nestjs/common").BadRequestException | import("@nestjs/common").NotFoundException>;
     update(id: number, data: UpdateUserDTO): Promise<boolean | {
         id: number;
         name: string;
@@ -39,14 +39,6 @@ export declare class UserController {
         role: string;
         createdAt: Date;
         updatedAt: Date;
-    }>;
-    delete(id: number): Promise<boolean | {
-        id: number;
-        name: string;
-        email: string;
-        password: string;
-        role: string;
-        createdAt: Date;
-        updatedAt: Date;
-    }>;
+    } | import("@nestjs/common").BadRequestException | import("@nestjs/common").NotFoundException>;
+    delete(id: number): Promise<boolean | import("@nestjs/common").BadRequestException | import("@nestjs/common").NotFoundException>;
 }

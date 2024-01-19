@@ -112,7 +112,7 @@ export class UserService {
 
     }
 
-    async checkId(id: number) {
+    async checkId(id: number): Promise<boolean | BadRequestException | NotFoundException> {
         if (id <= 0) {
             throw new BadRequestException(`id ${id} invalid`)
         }
